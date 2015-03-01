@@ -7,21 +7,21 @@ import (
 )
 
 type Board struct {
-	fields [][]int
-	size   int
+	fields     [][]int
+	sideLength int
 }
 
-func initializeBoard(size int) Board {
-	fields := make([][]int, size)
+func initializeBoard(sideLength int) Board {
+	fields := make([][]int, sideLength)
 	for index, _ := range fields {
-		row := initializeRow(size)
+		row := initializeRow(sideLength)
 		fields[index] = row
 	}
-	return Board{fields: fields, size: size}
+	return Board{fields: fields, sideLength: sideLength}
 }
 
-func initializeRow(size int) []int {
-	row := make([]int, size, size)
+func initializeRow(sideLength int) []int {
+	row := make([]int, sideLength, sideLength)
 	for index, _ := range row {
 		row[index] = rand.Intn(2)
 	}
@@ -74,12 +74,16 @@ func (b Board) startPosition(position int) int {
 }
 
 func (b Board) endPosition(position int) int {
-	upperLimit := b.size - 1
+	upperLimit := b.sideLength - 1
 	end := position + 1
 	if end > upperLimit {
 		end = upperLimit
 	}
 	return end
+}
+
+func (b Board) size() int {
+	return b.sideLength * b.sideLength
 }
 
 func (b Board) print() {
