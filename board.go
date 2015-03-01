@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"strings"
 	"sync"
 )
 
@@ -107,5 +108,5 @@ func (b Board) print() {
 	for _, row := range b.fields {
 		fmt.Println(row)
 	}
-	fmt.Println("----------")
+	fmt.Println(strings.Repeat("-", b.sideLength*2+1))
 }
