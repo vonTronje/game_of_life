@@ -107,4 +107,5 @@ func (b Board) print() {
 	for _, row := range b.fields {
 		fmt.Println(row)
 	}
+	fmt.Println("----------")
 }
