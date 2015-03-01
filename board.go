@@ -7,8 +7,9 @@ import (
 )
 
 type Board struct {
-	fields     [][]int
-	sideLength int
+	fields                                [][]int
+	sideLength                            int
+	calculateGroup, applyGroup, stepGroup sync.WaitGroup
 }
 
 func initializeBoard(sideLength int) Board {
@@ -28,11 +29,27 @@ func initializeRow(sideLength int) []int {
 	return row
 }
 
-func (b *Board) advanceField(row int, column int, waitGroup *sync.WaitGroup) {
-	state := b.nextState(row, column)
-	waitGroup.Done()
-	waitGroup.Wait()
-	b.fields[row][column] = state
+func (board *Board) advance() {
+	board.calculateGroup.Add(board.size())
+	board.stepGroup.Add(board.size())
+	board.applyGroup.Add(1)
+
+	for rowIndex, row := range board.fields {
+		for columnIndex, _ := range row {
+			go board.advanceField(rowIndex, columnIndex)
+		}
+	}
+	board.calculateGroup.Wait()
+	board.applyGroup.Done()
+	board.stepGroup.Wait()
+}
+
+func (board *Board) advanceField(row int, column int) {
+	state := board.nextState(row, column)
+	board.calculateGroup.Done()
+	board.applyGroup.Wait()
+	(*board).fields[row][column] = state
+	board.stepGroup.Done()
 }
 
 func (b Board) nextState(row int, column int) int {
