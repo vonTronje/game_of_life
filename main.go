@@ -14,13 +14,13 @@ func main() {
 }
 
 func advance(board *Board) {
-	var waitGroup sync.WaitGroup
+	var calculateGroup sync.WaitGroup
+	calculateGroup.Add(board.size())
 
 	for rowIndex, row := range board.fields {
 		for columnIndex, _ := range row {
-			waitGroup.Add(1)
-			go board.advanceField(rowIndex, columnIndex, &waitGroup)
+			go board.advanceField(rowIndex, columnIndex, &calculateGroup)
 		}
 	}
-	waitGroup.Wait()
+	calculateGroup.Wait()
 }
