@@ -52,7 +52,7 @@ func (board *Board) advanceField(row int, column int) {
 	board.stepGroup.Done()
 }
 
-func (b Board) nextState(row int, column int) int {
+func (b *Board) nextState(row int, column int) int {
 	rowStart := b.startPosition(row)
 	rowEnd := b.endPosition(row)
 	columnStart := b.startPosition(column)
@@ -82,7 +82,7 @@ func (b Board) nextState(row int, column int) int {
 	return result
 }
 
-func (b Board) startPosition(position int) int {
+func (b *Board) startPosition(position int) int {
 	start := position - 1
 	if start < 0 {
 		start = 0
@@ -90,7 +90,7 @@ func (b Board) startPosition(position int) int {
 	return start
 }
 
-func (b Board) endPosition(position int) int {
+func (b *Board) endPosition(position int) int {
 	upperLimit := b.sideLength - 1
 	end := position + 1
 	if end > upperLimit {
