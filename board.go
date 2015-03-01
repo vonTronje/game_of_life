@@ -70,14 +70,14 @@ func (b *Board) nextState(row int, column int) int {
 	previousState := b.fields[row][column]
 	var result int
 	switch {
-	case sum <= 2:
+	case sum < 2:
 		result = 0
-	case sum == 2 || sum == 3:
+	case sum == 2:
 		result = previousState
-	case sum >= 3:
-		result = 0
 	case sum == 3:
 		result = 1
+	case sum >= 3:
+		result = 0
 	}
 	return result
 }
