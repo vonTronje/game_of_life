@@ -60,7 +60,7 @@ func (b Board) nextState(row int, column int) int {
 
 	sum := 0
 	for rowIndex := rowStart; rowIndex <= rowEnd; rowIndex++ {
-		for columnIndex := columnStart; columnIndex <= columnEnd; columnEnd++ {
+		for columnIndex := columnStart; columnIndex <= columnEnd; columnIndex++ {
 			if rowIndex == row && columnIndex == column {
 				continue
 			}
