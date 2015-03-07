@@ -1,14 +1,10 @@
 package main
 
-import "time"
+import "net/http"
+
+var board Board
 
 func main() {
-	delay := time.Duration(3) * time.Second
-	board := initializeBoard(25)
-	board.print()
-	for {
-		(&board).advance()
-		board.print()
-		time.Sleep(delay)
-	}
+	board = initializeBoard(25)
+	http.HandleFunc("/gol", gameHandler)
 }

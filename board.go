@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"math/rand"
 	"strings"
@@ -102,6 +103,10 @@ func (b *Board) endPosition(position int) int {
 
 func (b Board) size() int {
 	return b.sideLength * b.sideLength
+}
+
+func (b Board) MarshalJSON() ([]byte, error) {
+	return json.Marshal(b.fields)
 }
 
 func (b Board) print() {
